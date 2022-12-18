@@ -155,6 +155,36 @@ pub fn battle() {
             _player_defense_modifier -= 1;
         }
 
+        // if player defense modifier is 0
+        if _player_defense_modifier <= 0 {
+            _player_defense_modifier = 0;
+        }
+
+        // if enemy defense modifier is 0
+        if _enemy_defense_modifier <= 0 {
+            _enemy_defense_modifier = 0;
+        }
+
+        // if player health is 0
+        if _player_health <= 0 {
+            _player_health = 0;
+        }
+
+        // if enemy health is 0
+        if _enemy_health <= 0 {
+            _enemy_health = 0;
+        }
+
+        // max player health
+        if _player_health > 100 {
+            _player_health = 100;
+        }
+
+        // max enemy health
+        if _enemy_health > 100 {
+            _enemy_health = 100;
+        }
+
         println!("Player Health: {}", _player_health);
         println!("Enemy Health: {}", _enemy_health);
         println!("Player Attack: {}", _player_attack);
