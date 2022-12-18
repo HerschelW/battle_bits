@@ -2,8 +2,8 @@
 // 2019-10-20
 
 // imports
-// use tokio time
-use tokio::time::{sleep, Duration};
+// use tokio duration
+use tokio::time::Duration;
 // use rand::Rng;
 use rand::Rng;
 
