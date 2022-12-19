@@ -5,6 +5,9 @@
 // use rand::Rng;
 use rand::Rng;
 
+// warrior object
+
+// battle function
 pub fn battle() {
     // wait for enter function
     fn wait_for_enter() {
