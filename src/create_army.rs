@@ -25,8 +25,8 @@ pub fn warrior_profile(params: Vec<i32>) {
         // hit
         pub hit: bool,
     }
+
     // create warrior
-    let warrior_name = params[3].to_string();
     let mut warrior = Warrior {
         name: "Warrior".to_string(),
         health: params[0],
@@ -41,33 +41,21 @@ pub fn warrior_profile(params: Vec<i32>) {
         critical_hit_damage: 0,
         hit: false,
     };
-
-    // return warrior
-    return warrior;
 }
 
 // create army
 pub fn create_army() {
+    // create empty array of warriors
+    let mut warriors = Vec::new();
+
     // create figher
-    let fighter = warrior_profile(vec![100, 10, 10, 1]);
-    // print fighter object
-    println!("Fighter: {:?}", fighter);
+    warrior_profile(vec![100, 10, 10, 1]);
 
     // create mage
-    let mage = mage_profile(vec![100, 15, 5, 2]);
-    // print mage object
-    println!("Mage: {:?}", mage);
+    warrior_profile(vec![100, 15, 5, 2]);
 
     // create rogue
-    let rogue = rogue_profile(vec![100, 5, 15, 3]);
-    // print rogue object
-    println!("Rogue: {:?}", rogue);
+    warrior_profile(vec![100, 5, 15, 3]);
 
-    // create army
-    let army = vec![warrior, mage, rogue];
-    // print army
-    println!("Army: {:?}", army);
-
-    // return army
-    return army;
+    println!("Army: {:?}", warriors);
 }
