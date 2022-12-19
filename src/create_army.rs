@@ -69,18 +69,3 @@ pub fn army(param: i32) -> Vec<Warrior> {
     // return army
     army_vector
 }
-
-pub fn fibonacci(mut val1: i32, mut val2: i32, total: i32) -> Vec<i32> {
-    let mut result = 0;
-    let mut result1 = Vec::new();
-    result1.push(val1);
-    result1.push(result + val2);
-    for _i in 1..(total + 1) {
-        result = val1 + val2;
-        val1 = val2;
-        val2 = result;
-        result1.push(result);
-    }
-
-    result1
-}

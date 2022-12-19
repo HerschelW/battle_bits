@@ -4,7 +4,6 @@ pub mod warrior;
 
 // use battle::battle;
 use create_army::army;
-use create_army::fibonacci;
 fn main() {
     // start game
     start_game();
@@ -22,7 +21,4 @@ pub fn start_game() {
     println!("{:?}", army);
     // battle
     // battle(army);
-    // print fibonacci
-    let fib = fibonacci(0, 1, 10);
-    println!("{:?}", fib);
 }
