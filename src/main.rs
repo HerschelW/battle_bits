@@ -14,14 +14,14 @@ fn main() {
   let enemy_army1 = army(500);
   let enemy_army2 = army(500);
 
-//   println!(
-//     "Victorious army 2 hero:\n {},\n health: {},\n attack: {},\n defense: {} \n\n\n",
-//     victorious_army2[0].name,
-//     victorious_army2[0].health,
-//     victorious_army2[0].attack_modifier,
-//     victorious_army2[0].defense_modifier
-//   );
-//   println!("\n\n\n");
+  println!(
+    "Victorious army 2 hero:\n {},\n health: {},\n attack: {},\n defense: {} \n\n\n",
+    victorious_army2[0].name,
+    victorious_army2[0].health,
+    victorious_army2[0].attack_modifier,
+    victorious_army2[0].defense_modifier
+  );
+  println!("\n\n\n");
 
   let champion_army1 = battle(victorious_army1, enemy_army1);
   println!("Champion Army 1: {:?}", champion_army1);

@@ -83,12 +83,12 @@ pub fn battle(mut player_army: Vec<Warrior>, mut enemy_army: Vec<Warrior>) -> Ve
     loop {
       _round += 1;
 
-      if _player_health > 500 {
-        _player_health = 500;
+      if _player_health > 200 {
+        _player_health = 200;
       }
 
-      if _enemy_health > 500 {
-        _enemy_health = 500;
+      if _enemy_health > 200 {
+        _enemy_health = 200;
       }
       _player_attack_roll = rand::thread_rng().gen_range(1..=50);
       _enemy_attack_roll = rand::thread_rng().gen_range(1..=50);
