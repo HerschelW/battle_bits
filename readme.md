@@ -8,9 +8,9 @@ Battle Bits is a Rust-based implementation of the classic Rock, Paper, Scissors 
 
 ### Features
 
-* **Large-scale battles**: Engage in epic clashes between Rock, Paper, and Scissors armies
-* **Rust-based**: Built with Rust for **performance**, **safety**, and **reliability**
-* **[Insert other features you'd like to highlight]**
+- **Large-scale battles**: Engage in epic clashes between Rock, Paper, and Scissors armies
+- **Rust-based**: Built with Rust for **performance**, **safety**, and **reliability**
+- **[Insert other features you'd like to highlight]**
 
 ### Getting Started
 
@@ -46,3 +46,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+```

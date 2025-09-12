@@ -1,190 +1,178 @@
+use super::combat_calculator::CombatCalculator;
+use super::visualization::*;
 use super::warrior::Warrior;
-use rand::Rng;
 
 pub fn battle(mut player_army: Vec<Warrior>, mut enemy_army: Vec<Warrior>) -> Vec<Warrior> {
-  // fn wait_for_enter() {
-  //   println!("Press enter to continue...");
-  //   let mut input = String::new();
-  //   std::io::stdin().read_line(&mut input).unwrap();
+    // fn wait_for_enter() {
+    //   println!("Press enter to continue...");
+    //   let mut input = String::new();
+    //   std::io::stdin().read_line(&mut input).unwrap();
 
-  //   if input.trim() == "" {
-  //     println!("Continuing...");
-  //   } else {
-  //     println!("Invalid input!");
-  //     wait_for_enter();
-  //   }
-  // }
+    //   if input.trim() == "" {
+    //     println!("Continuing...");
+    //   } else {
+    //     println!("Invalid input!");
+    //     wait_for_enter();
+    //   }
+    // }
 
-  fn pause_one_second() {
-    std::thread::sleep(std::time::Duration::from_secs(1));
-  }
-
-  let player_army_size = player_army.len();
-  let enemy_army_size = enemy_army.len();
-  let mut _number_of_battles = 0;
-  if player_army_size < enemy_army_size {
-    _number_of_battles = player_army_size;
-  } else {
-    _number_of_battles = enemy_army_size;
-  }
-
-  let mut i = 0;
-  // wait_for_enter();
-  pause_one_second();
-  loop {
-    if i >= _number_of_battles {
-      println!("Counting casualties...");
-      player_army.retain(|warrior| warrior.health > 0);
-      enemy_army.retain(|warrior| warrior.health > 0);
-
-      println!("Player army count: {}
-            ", player_army.len());
-      println!("Enemy army count: {}
-            ", enemy_army.len());
-
-      if player_army.is_empty() {
-        println!("Player army is defeated!");
-        return enemy_army;
-      } else if enemy_army.is_empty() {
-        println!("Enemy army is defeated!");
-        return player_army;
-      }
-
-      _number_of_battles = std::cmp::min(player_army.len(), enemy_army.len());
-      println!("Number of battles: {}
-            ", _number_of_battles);
-      i = 0;
+    fn pause_one_second() {
+        std::thread::sleep(std::time::Duration::from_secs(1));
     }
 
-    let mut _player_health = player_army[i].health;
-    let mut _player_attack_modifier = player_army[i].attack_modifier;
-    let mut _player_defense_modifier = player_army[i].defense_modifier;
-    let mut _player_attack = 0;
-    let mut _player_defense = 0;
-    let mut _player_damage = 0;
-    let mut _player_attack_roll = 0;
-    let mut _player_defense_roll = 0;
-    let mut _player_critical_hit = false;
-    let mut _player_critical_hit_damage = 0;
-    let mut player_hit = false;
-    let mut _enemy_health = enemy_army[i].health;
-    let mut _enemy_attack_modifier = enemy_army[i].attack_modifier;
-    let mut _enemy_defense_modifier = enemy_army[i].defense_modifier;
-    let mut _enemy_attack = 0;
-    let mut _enemy_defense = 0;
-    let mut _enemy_damage = 0;
-    let mut _enemy_attack_roll = 0;
-    let mut _enemy_defense_roll = 0;
-    let mut _enemy_critical_hit = false;
-    let mut _enemy_critical_hit_damage = 0;
-    let mut enemy_hit = false;
-    let mut _round = 0;
+    let player_army_size = player_army.len();
+    let enemy_army_size = enemy_army.len();
+    let mut _number_of_battles = 0;
+    if player_army_size < enemy_army_size {
+        _number_of_battles = player_army_size;
+    } else {
+        _number_of_battles = enemy_army_size;
+    }
 
+    let mut i = 0;
+    // wait_for_enter();
+    pause_one_second();
     loop {
-      _round += 1;
+        if i >= _number_of_battles {
+            println!("📊 Counting casualties...");
+            player_army.retain(|warrior| warrior.health > 0);
+            enemy_army.retain(|warrior| warrior.health > 0);
 
-      if _player_health > 200 {
-        _player_health = 200;
-      }
+            // Enhanced visualization with progress bars
+            print_army_status("Player", player_army.len());
+            print_army_status("Enemy", enemy_army.len());
 
-      if _enemy_health > 200 {
-        _enemy_health = 200;
-      }
-      _player_attack_roll = rand::thread_rng().gen_range(1..=50);
-      _enemy_attack_roll = rand::thread_rng().gen_range(1..=50);
-      _player_defense_roll = rand::thread_rng().gen_range(1..=50);
-      _enemy_defense_roll = rand::thread_rng().gen_range(1..=50);
-      if _player_attack_roll == 50 {
-        _player_critical_hit = true;
-        _player_critical_hit_damage = rand::thread_rng().gen_range(1..=50);
-      }
+            if player_army.is_empty() {
+                print_victory_message("Enemy", enemy_army.len());
+                return enemy_army;
+            } else if enemy_army.is_empty() {
+                print_victory_message("Player", player_army.len());
+                return player_army;
+            }
 
-      if _enemy_attack_roll == 50 {
-        _enemy_critical_hit = true;
-        _enemy_critical_hit_damage = rand::thread_rng().gen_range(1..=50);
-      }
+            _number_of_battles = std::cmp::min(player_army.len(), enemy_army.len());
+            println!("⚔️  Next round: {} battles remaining", _number_of_battles);
+            i = 0;
+        }
 
-      if _player_critical_hit {
-        _player_attack = _player_attack_roll + _player_attack_modifier + _player_critical_hit_damage;
-      } else {
-        _player_attack = _player_attack_roll + _player_attack_modifier;
-      }
+        let mut player_health = player_army[i].health;
+        let player_attack_modifier = player_army[i].attack_modifier;
+        let mut player_defense_modifier = player_army[i].defense_modifier;
+        let mut enemy_health = enemy_army[i].health;
+        let enemy_attack_modifier = enemy_army[i].attack_modifier;
+        let mut enemy_defense_modifier = enemy_army[i].defense_modifier;
+        let mut _round = 0;
 
-      if _enemy_critical_hit {
-        _enemy_attack = _enemy_attack_roll + _enemy_attack_modifier + _enemy_critical_hit_damage;
-      } else {
-        _enemy_attack = _enemy_attack_roll + _enemy_attack_modifier;
-      }
+        // Print battle header for this warrior duel
+        print_battle_header(i + 1, &player_army[i], &enemy_army[i]);
 
-      _player_defense = _player_defense_roll + _player_defense_modifier;
-      _enemy_defense = _enemy_defense_roll + _enemy_defense_modifier;
-      if _enemy_defense < _player_attack {
-        _player_damage = _player_attack - _enemy_defense;
-        player_hit = true;
-      } else {
-        _player_damage = 0;
-        _enemy_health += 1;
-      }
+        loop {
+            _round += 1;
 
-      if _player_defense < _enemy_attack {
-        _enemy_damage = _enemy_attack - _player_defense;
-        enemy_hit = true;
-      } else {
-        _enemy_damage = 0;
-        _player_health += 1;
-      }
+            // Cap health at maximum
+            player_health = CombatCalculator::cap_health(player_health);
+            enemy_health = CombatCalculator::cap_health(enemy_health);
 
-      if player_hit {
-        _enemy_health -= _player_damage;
-        _enemy_defense_modifier -= 1;
-      }
+            // Create temporary warriors for combat calculation
+            let temp_player = Warrior {
+                name: player_army[i].name.clone(),
+                warrior_type: player_army[i].warrior_type.clone(),
+                health: player_health,
+                attack_modifier: player_attack_modifier,
+                defense_modifier: player_defense_modifier,
+                attack: 0,
+                defense: 0,
+                damage: 0,
+                attack_roll: 0,
+                defense_roll: 0,
+                critical_hit: false,
+                critical_hit_damage: 0,
+                hit: false,
+            };
 
-      if enemy_hit {
-        _player_health -= _enemy_damage;
-        _player_defense_modifier -= 1;
-      }
+            let temp_enemy = Warrior {
+                name: enemy_army[i].name.clone(),
+                warrior_type: enemy_army[i].warrior_type.clone(),
+                health: enemy_health,
+                attack_modifier: enemy_attack_modifier,
+                defense_modifier: enemy_defense_modifier,
+                attack: 0,
+                defense: 0,
+                damage: 0,
+                attack_roll: 0,
+                defense_roll: 0,
+                critical_hit: false,
+                critical_hit_damage: 0,
+                hit: false,
+            };
 
-      if _player_defense_modifier <= 0 {
-        _player_defense_modifier = 0;
-      }
+            // Process combat for both warriors
+            let player_combat = CombatCalculator::process_combat_round(&temp_player);
+            let enemy_combat = CombatCalculator::process_combat_round(&temp_enemy);
 
-      if _enemy_defense_modifier <= 0 {
-        _enemy_defense_modifier = 0;
-      }
+            // Resolve combat between them
+            let (player_result, enemy_result) =
+                CombatCalculator::resolve_combat(&player_combat, &enemy_combat);
 
-      if _player_health <= 0 {
-        _player_health = 0;
-      }
+            // Display attack results
+            print_attack_result(
+                &player_army[i].name,
+                player_result.damage,
+                player_result.critical_hit,
+            );
+            print_attack_result(
+                &enemy_army[i].name,
+                enemy_result.damage,
+                enemy_result.critical_hit,
+            );
 
-      if _enemy_health <= 0 {
-        _enemy_health = 0;
-      }
-      if _player_health <= 0 && _enemy_health <= 0 {
-        i += 1;
-        break;
-      }
+            // Apply damage and bonuses
+            if player_result.hit {
+                enemy_health -= player_result.damage;
+                enemy_defense_modifier =
+                    (enemy_defense_modifier - CombatCalculator::get_defense_penalty()).max(0);
+            } else {
+                enemy_health += CombatCalculator::get_miss_bonus();
+            }
 
-      if _player_health <= 0 {
-        player_army[i].health = _player_health;
-        enemy_army[i].health = _enemy_health + 5;
-        enemy_army[i].attack_modifier += 1;
-        enemy_army[i].defense_modifier += 1;
-        i += 1;
-        break;
-      } else if _enemy_health <= 0 {
-        enemy_army[i].health = _enemy_health;
-        player_army[i].health = _player_health + 5;
-        player_army[i].attack_modifier += 1;
-        player_army[i].defense_modifier += 1;
-        i += 1;
-        break;
-      }
+            if enemy_result.hit {
+                player_health -= enemy_result.damage;
+                player_defense_modifier =
+                    (player_defense_modifier - CombatCalculator::get_defense_penalty()).max(0);
+            } else {
+                player_health += CombatCalculator::get_miss_bonus();
+            }
 
-      player_hit = false;
-      enemy_hit = false;
-      _player_critical_hit = false;
-      _enemy_critical_hit = false;
-      println!("\n");
+            // Ensure health doesn't go below 0
+            player_health = player_health.max(0);
+            enemy_health = enemy_health.max(0);
+
+            // Check for battle end conditions
+            if player_health <= 0 && enemy_health <= 0 {
+                i += 1;
+                break;
+            }
+
+            if player_health <= 0 {
+                println!("💀 {} is defeated!", player_army[i].name);
+                player_army[i].health = player_health;
+                enemy_army[i].health = enemy_health + CombatCalculator::get_victory_health_bonus();
+                enemy_army[i].attack_modifier += CombatCalculator::get_victory_stat_bonus();
+                enemy_army[i].defense_modifier += CombatCalculator::get_victory_stat_bonus();
+                i += 1;
+                break;
+            } else if enemy_health <= 0 {
+                println!("💀 {} is defeated!", enemy_army[i].name);
+                enemy_army[i].health = enemy_health;
+                player_army[i].health =
+                    player_health + CombatCalculator::get_victory_health_bonus();
+                player_army[i].attack_modifier += CombatCalculator::get_victory_stat_bonus();
+                player_army[i].defense_modifier += CombatCalculator::get_victory_stat_bonus();
+                i += 1;
+                break;
+            }
+
+            println!("\n");
+        }
     }
-  }
 }
